@@ -1,0 +1,502 @@
+[
+    {
+        "id": "3998f57d.31dcfa",
+        "type": "ui_chart",
+        "z": "4c77097.faa3ef8",
+        "name": "",
+        "group": "bdf7e8aa.88ec08",
+        "order": 3,
+        "width": "20",
+        "height": "6",
+        "label": "VibrationFFT",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "200",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "useOldStyle": false,
+        "x": 513,
+        "y": 136,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "d1e317a1.d7da18",
+        "type": "function",
+        "z": "4c77097.faa3ef8",
+        "name": "reset the chart",
+        "func": "m= msg.payload;\nif(m==512){\n    msg.payload =[] \n\n    return msg;\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 415,
+        "y": 20,
+        "wires": [
+            [
+                "3998f57d.31dcfa"
+            ]
+        ]
+    },
+    {
+        "id": "5bfca192.cc0e1",
+        "type": "counter",
+        "z": "4c77097.faa3ef8",
+        "name": "Counter",
+        "init": "0",
+        "step": "1",
+        "lower": "",
+        "upper": "512",
+        "mode": "increment",
+        "outputs": 2,
+        "x": 280,
+        "y": 100,
+        "wires": [
+            [
+                "d1e317a1.d7da18",
+                "354a6da2.8effd2"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "354a6da2.8effd2",
+        "type": "function",
+        "z": "4c77097.faa3ef8",
+        "name": "reset the counter",
+        "func": "m=msg.payload;\nif (m==512){\n    msg.reset = true;\n    return msg ;\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 274,
+        "y": 195,
+        "wires": [
+            [
+                "5bfca192.cc0e1"
+            ]
+        ]
+    },
+    {
+        "id": "5a07ed10.78f294",
+        "type": "ibmiot in",
+        "z": "4c77097.faa3ef8",
+        "authentication": "boundService",
+        "apiKey": "",
+        "inputType": "evt",
+        "logicalInterface": "",
+        "ruleId": "",
+        "deviceId": "VibrationSensor",
+        "applicationId": "",
+        "deviceType": "sensors",
+        "eventType": "+",
+        "commandType": "",
+        "format": "json",
+        "name": "VibrationSensor",
+        "service": "registered",
+        "allDevices": "",
+        "allApplications": "",
+        "allDeviceTypes": false,
+        "allLogicalInterfaces": "",
+        "allEvents": true,
+        "allCommands": "",
+        "allFormats": "",
+        "qos": 0,
+        "x": 85,
+        "y": 136,
+        "wires": [
+            [
+                "5bfca192.cc0e1",
+                "3998f57d.31dcfa"
+            ]
+        ]
+    },
+    {
+        "id": "9f6b0d0e.506f3",
+        "type": "ibmiot in",
+        "z": "4c77097.faa3ef8",
+        "authentication": "boundService",
+        "apiKey": "",
+        "inputType": "evt",
+        "logicalInterface": "",
+        "ruleId": "",
+        "deviceId": "CurrentSensor",
+        "applicationId": "",
+        "deviceType": "sensors",
+        "eventType": "+",
+        "commandType": "",
+        "format": "json",
+        "name": "CurrentSensor",
+        "service": "registered",
+        "allDevices": "",
+        "allApplications": "",
+        "allDeviceTypes": false,
+        "allLogicalInterfaces": "",
+        "allEvents": true,
+        "allCommands": "",
+        "allFormats": "",
+        "qos": 0,
+        "x": 94,
+        "y": 342,
+        "wires": [
+            [
+                "220ac5c0.0dc65a",
+                "85eba4db.5700e8"
+            ]
+        ]
+    },
+    {
+        "id": "220ac5c0.0dc65a",
+        "type": "counter",
+        "z": "4c77097.faa3ef8",
+        "name": "Counter",
+        "init": "0",
+        "step": "1",
+        "lower": "",
+        "upper": "512",
+        "mode": "increment",
+        "outputs": 2,
+        "x": 271,
+        "y": 343,
+        "wires": [
+            [
+                "107f97ef.563cf8",
+                "3a71011a.bac02e"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "3a71011a.bac02e",
+        "type": "function",
+        "z": "4c77097.faa3ef8",
+        "name": "Reset The Chart",
+        "func": "m= msg.payload;\nif(m==512){\n    msg.payload =[] \n\n    return msg;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 431,
+        "y": 304,
+        "wires": [
+            [
+                "85eba4db.5700e8"
+            ]
+        ]
+    },
+    {
+        "id": "107f97ef.563cf8",
+        "type": "function",
+        "z": "4c77097.faa3ef8",
+        "name": "Reset The Counter",
+        "func": "m=msg.payload;\nif (m==512){\n    msg.reset = true;\n    return msg ;\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 274,
+        "y": 409,
+        "wires": [
+            [
+                "220ac5c0.0dc65a"
+            ]
+        ]
+    },
+    {
+        "id": "85eba4db.5700e8",
+        "type": "ui_chart",
+        "z": "4c77097.faa3ef8",
+        "name": "",
+        "group": "bdf7e8aa.88ec08",
+        "order": 4,
+        "width": "20",
+        "height": "6",
+        "label": "CurrentFFT",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "200",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "useOldStyle": false,
+        "x": 574,
+        "y": 348,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "736da26b.86928c",
+        "type": "ibmiot in",
+        "z": "4c77097.faa3ef8",
+        "authentication": "quickstart",
+        "apiKey": "",
+        "inputType": "evt",
+        "logicalInterface": "",
+        "ruleId": "",
+        "deviceId": "ahmedtharwat",
+        "applicationId": "",
+        "deviceType": "+",
+        "eventType": "+",
+        "commandType": "",
+        "format": "json",
+        "name": "Features",
+        "service": "quickstart",
+        "allDevices": "",
+        "allApplications": "",
+        "allDeviceTypes": true,
+        "allLogicalInterfaces": "",
+        "allEvents": true,
+        "allCommands": "",
+        "allFormats": "",
+        "qos": 0,
+        "x": 79,
+        "y": 594,
+        "wires": [
+            [
+                "14f5053a.6a1a2b"
+            ]
+        ]
+    },
+    {
+        "id": "5fa46912.4a6218",
+        "type": "ui_text",
+        "z": "4c77097.faa3ef8",
+        "group": "bdf7e8aa.88ec08",
+        "order": 1,
+        "width": "5",
+        "height": "3",
+        "name": "",
+        "label": "Motor Condition",
+        "format": "{{msg.payload.values[0][8]}}",
+        "layout": "row-center",
+        "x": 768,
+        "y": 478,
+        "wires": []
+    },
+    {
+        "id": "14f5053a.6a1a2b",
+        "type": "join",
+        "z": "4c77097.faa3ef8",
+        "name": "Making array for features",
+        "mode": "custom",
+        "build": "array",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": false,
+        "timeout": "",
+        "count": "4",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 263,
+        "y": 555,
+        "wires": [
+            [
+                "12f8e06d.e876c"
+            ]
+        ]
+    },
+    {
+        "id": "12f8e06d.e876c",
+        "type": "function",
+        "z": "4c77097.faa3ef8",
+        "name": "Features arrangement",
+        "func": "m=msg.payload\nmsg.payload = {\n  \"fields\": [\n    \"SEPAL LENGTH\",\n    \"SEPAL WIDTH\",\n    \"PETAL LENGTH\",\n    \"PETAL WIDTH\"\n  ],\n  \"values\": [\n    m\n    \n  ]\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 489,
+        "y": 592,
+        "wires": [
+            [
+                "8e045a95.73b838"
+            ]
+        ]
+    },
+    {
+        "id": "8e045a95.73b838",
+        "type": "wml",
+        "z": "4c77097.faa3ef8",
+        "name": "RunPrediction",
+        "connection": "70dd316a.ae702",
+        "wml-mode": "runPrediction",
+        "model": "55e5c6c4-8f8e-4287-b64b-879bf49f4d02",
+        "deployment": "835f79eb-cc36-41c5-8cbb-d5a5ab47789c",
+        "modelhidden": "55e5c6c4-8f8e-4287-b64b-879bf49f4d02",
+        "deploymenthidden": "",
+        "x": 678,
+        "y": 543,
+        "wires": [
+            [
+                "5fa46912.4a6218",
+                "dacfcd34.46d7c",
+                "ee5c47d9.266bf8",
+                "77af417f.3c4bc"
+            ]
+        ]
+    },
+    {
+        "id": "ffe67ad1.68aa98",
+        "type": "ui_toast",
+        "z": "4c77097.faa3ef8",
+        "position": "dialog",
+        "displayTime": "5",
+        "highlight": "",
+        "outputs": 1,
+        "ok": "OK",
+        "cancel": "",
+        "topic": "There is a fault",
+        "name": "",
+        "x": 693,
+        "y": 695,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "dacfcd34.46d7c",
+        "type": "function",
+        "z": "4c77097.faa3ef8",
+        "name": "Notification",
+        "func": "m=msg.payload.values[0][8];\nif (m == 'Iris-versicolor')\n{\n  return msg;\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 762,
+        "y": 620,
+        "wires": [
+            [
+                "ffe67ad1.68aa98"
+            ]
+        ]
+    },
+    {
+        "id": "ee5c47d9.266bf8",
+        "type": "debug",
+        "z": "4c77097.faa3ef8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload.values[0][8]",
+        "x": 817,
+        "y": 411,
+        "wires": []
+    },
+    {
+        "id": "77af417f.3c4bc",
+        "type": "function",
+        "z": "4c77097.faa3ef8",
+        "name": "PLC Communication",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 889.1428375244141,
+        "y": 538.2857050895691,
+        "wires": [
+            [
+                "7cb7bd96.151c54"
+            ]
+        ]
+    },
+    {
+        "id": "7cb7bd96.151c54",
+        "type": "s7 out",
+        "z": "4c77097.faa3ef8",
+        "endpoint": "4e86779f.b721a8",
+        "variable": "error",
+        "name": "PLC OUT",
+        "x": 1064.5714263916016,
+        "y": 567.8571853637695,
+        "wires": []
+    },
+    {
+        "id": "bdf7e8aa.88ec08",
+        "type": "ui_group",
+        "z": "",
+        "name": "PredictiveMaintenance",
+        "tab": "1288633f.f34e7d",
+        "order": 1,
+        "disp": true,
+        "width": "20",
+        "collapse": true
+    },
+    {
+        "id": "70dd316a.ae702",
+        "type": "wml-config",
+        "z": "",
+        "host": "https://us-south.ml.cloud.ibm.com",
+        "accesskey": "8e9d0931-46bd-43cc-9787-7172c1a773b6",
+        "instanceid": "8e9d0931-46bd-43cc-9787-7172c1a773b6",
+        "name": "MachineLearning"
+    },
+    {
+        "id": "4e86779f.b721a8",
+        "type": "s7 endpoint",
+        "z": "",
+        "address": "192.168.0.25",
+        "port": "102",
+        "rack": "0",
+        "slot": "2",
+        "localtsaphi": "01",
+        "localtsaplo": "00",
+        "remotetsaphi": "01",
+        "remotetsaplo": "00",
+        "connmode": "rack-slot",
+        "cycletime": "500",
+        "timeout": "1500",
+        "verbose": "default",
+        "name": "",
+        "vartable": [
+            {
+                "addr": "Q0.5",
+                "name": "error"
+            }
+        ]
+    },
+    {
+        "id": "1288633f.f34e7d",
+        "type": "ui_tab",
+        "z": "",
+        "name": "Motor 1 Analysis",
+        "icon": "dashboard",
+        "order": 1
+    }
+]
